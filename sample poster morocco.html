@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Poster – Morocco</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Cinzel:wght@700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #c4a882; display: flex; justify-content: center; padding: 32px 16px; min-height: 100vh; }
+  @media print { body { background: white; padding: 0; } .poster { box-shadow: none; } .no-print { display: none; } }
+  .no-print { position: fixed; top: 16px; right: 16px; z-index: 99; }
+  .print-btn { background: #7a3a10; color: white; border: none; padding: 8px 20px; cursor: pointer; font-size: 0.9rem; border-radius: 4px; }
+
+  .poster {
+    width: 800px; min-height: 1040px;
+    background: #fdf5e6;
+    box-shadow: 5px 5px 36px rgba(0,0,0,0.28);
+    font-family: 'Architects Daughter', cursive;
+    position: relative; overflow: hidden;
+    border: 3px solid #c8a060;
+  }
+  .poster::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, #e8dcc0 31px, #e8dcc0 32px);
+    opacity: 0.3; pointer-events: none; z-index: 0;
+  }
+  .tile-border {
+    height: 16px; position: relative; z-index: 2;
+    background: repeating-linear-gradient(90deg,
+      #c1440e 0px,#c1440e 16px, #f0c040 16px,#f0c040 32px,
+      #1a6e3a 32px,#1a6e3a 48px, #003580 48px,#003580 64px,
+      #c1440e 64px,#c1440e 80px, #f0c040 80px,#f0c040 96px,
+      #1a6e3a 96px,#1a6e3a 112px, #003580 112px,#003580 128px);
+  }
+  .tape { position: absolute; width: 64px; height: 20px; background: rgba(255,220,160,0.6); border: 1px solid rgba(200,160,80,0.4); z-index: 10; }
+  .tape.tl { top: 20px; left: 70px; transform: rotate(-2deg); }
+  .tape.tr { top: 20px; right: 80px; transform: rotate(4deg); }
+  .tape.bl { bottom: 20px; left: 90px; transform: rotate(3deg); }
+  .tape.br { bottom: 20px; right: 60px; transform: rotate(-4deg); }
+
+  .header {
+    background: #7a2800; padding: 22px 32px 18px;
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .flag-ma { width: 72px; height: 48px; border: 2.5px solid rgba(255,255,255,0.5); background: #c1440e; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  h1 { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 900; color: #fcd116; line-height: 1; text-shadow: 1px 2px 4px rgba(0,0,0,0.4); }
+  .slogan { color: #f0c888; font-size: 0.88rem; margin-top: 6px; font-style: italic; }
+  .stars { color: #fcd116; font-size: 1.2rem; letter-spacing: 3px; margin-top: 4px; }
+
+  .triptych { display: grid; grid-template-columns: 195px 1fr 195px; position: relative; z-index: 1; min-height: 780px; }
+
+  .left-panel, .right-panel { background: #f5e8cc; padding: 18px 14px; display: flex; flex-direction: column; gap: 14px; }
+  .left-panel { border-right: 2px solid #c8a060; }
+  .right-panel { border-left: 2px solid #c8a060; }
+
+  .panel-title { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700; color: #7a2800; border-bottom: 2px solid #c8a060; padding-bottom: 4px; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .panel-list { list-style: none; font-size: 0.79rem; color: #3a2800; line-height: 1.8; }
+  .panel-list li::before { content: "◆ "; font-size: 0.5rem; color: #c1440e; vertical-align: middle; }
+  .panel-text { font-size: 0.79rem; color: #3a2800; line-height: 1.7; }
+
+  .fact-bubble { background: #003580; border-radius: 4px; padding: 11px 12px; color: white; font-size: 0.78rem; line-height: 1.65; }
+  .fact-title { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; color: #fcd116; margin-bottom: 6px; }
+
+  .center-panel { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+  .drawing-row { display: flex; justify-content: space-around; align-items: flex-end; padding: 2px 0; }
+  .drawing-item { text-align: center; }
+  .drawing-label { font-size: 0.63rem; color: #7a5a30; margin-top: 3px; }
+
+  .section-title { font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700; color: #7a2800; border-bottom: 2px solid #c8a060; padding-bottom: 4px; margin-bottom: 8px; }
+
+  .day-stack { display: flex; flex-direction: column; gap: 6px; }
+  .day-row { display: flex; gap: 8px; align-items: flex-start; font-size: 0.8rem; color: #3a2800; background: white; border: 1.5px solid #d8b870; border-radius: 3px; padding: 6px 9px; }
+  .day-badge { background: #7a2800; color: #fcd116; font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 700; padding: 2px 6px; border-radius: 2px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+
+  .arabic-box { background: white; border: 2px solid #c8a060; border-radius: 3px; padding: 10px 12px; }
+  .arabic-title { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; color: #7a2800; margin-bottom: 7px; text-transform: uppercase; }
+  .arabic-word { display: flex; justify-content: space-between; align-items: center; font-size: 0.79rem; padding: 3px 0; border-bottom: 1px dotted #d8b870; color: #3a2800; }
+  .arabic-word:last-child { border-bottom: none; }
+  .arabic-ar { font-size: 0.95rem; color: #7a2800; }
+
+  .footer { background: #7a2800; color: rgba(255,220,150,0.75); text-align: center; padding: 9px 20px; font-size: 0.73rem; position: relative; z-index: 2; }
+</style>
+</head>
+<body>
+<div class="no-print"><button class="print-btn" onclick="window.print()">Print</button></div>
+<div class="poster">
+  <div class="tape tl"></div><div class="tape tr"></div><div class="tape bl"></div><div class="tape br"></div>
+  <div class="tile-border"></div>
+
+  <div class="header">
+    <div class="flag-ma">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <polygon points="15,2 17,9.5 24.5,9.5 18.5,14 20.5,21.5 15,17 9.5,21.5 11.5,14 5.5,9.5 13,9.5" fill="none" stroke="#1a6e3a" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Visit Morocco!</h1>
+      <div class="slogan">"Desert, mountains, ocean — and the best mint tea in the world!"</div>
+      <div class="stars">★★★★★</div>
+    </div>
+  </div>
+
+  <div class="triptych">
+
+    <div class="left-panel">
+      <div>
+        <div class="panel-title">Places to Visit</div>
+        <ul class="panel-list">
+          <li>Marrakech – the Red City</li>
+          <li>Fez – ancient medina</li>
+          <li>Chefchaouen – blue city!</li>
+          <li>Sahara Desert</li>
+          <li>Casablanca – biggest city</li>
+          <li>Essaouira – ocean town</li>
+        </ul>
+      </div>
+      <div>
+        <div class="panel-title">Food to Try</div>
+        <ul class="panel-list">
+          <li>Tagine – slow-cooked stew</li>
+          <li>Couscous – every Friday!</li>
+          <li>Pastilla – sweet + savory pie</li>
+          <li>Harira – tomato soup</li>
+          <li>Msemen – flat bread</li>
+          <li>Mint tea (always!)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="panel-title">Travel Tips</div>
+        <p class="panel-text">
+          Dress modestly — cover shoulders and knees.<br><br>
+          Bargain in the souks — it's normal!<br><br>
+          Always say shukran (thank you).<br><br>
+          Best time: March–May or Sept–Nov.
+        </p>
+      </div>
+    </div>
+
+    <div class="center-panel">
+      <div class="drawing-row">
+        <div class="drawing-item">
+          <svg width="50" height="58" viewBox="0 0 50 58">
+            <ellipse cx="25" cy="50" rx="20" ry="6" fill="#c8702a"/>
+            <ellipse cx="25" cy="45" rx="20" ry="6" fill="#d88040"/>
+            <ellipse cx="25" cy="41" rx="17" ry="5" fill="#c86020"/>
+            <polygon points="25,5 11,41 39,41" fill="#d88040" stroke="#b06020" stroke-width="1.5"/>
+            <polygon points="25,5 18,27 32,27" fill="#c86020"/>
+            <circle cx="25" cy="5" r="3" fill="#8a4010"/>
+            <path d="M19,1 Q21,-5 19,-11" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M25,-1 Q27,-7 25,-13" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="drawing-label">Tagine</div>
+        </div>
+        <div class="drawing-item">
+          <svg width="54" height="58" viewBox="0 0 54 58">
+            <rect x="6" y="22" width="42" height="34" fill="#f0d888" stroke="#b09020" stroke-width="1.5"/>
+            <path d="M16,56 L16,38 Q16,26 27,26 Q38,26 38,38 L38,56" fill="#e0c060" stroke="#b09020" stroke-width="1.5"/>
+            <path d="M18,56 L18,39 Q18,30 27,30 Q36,30 36,39 L36,56" fill="#7a2800"/>
+            <rect x="6" y="22" width="42" height="5" fill="#c1440e" opacity="0.5"/>
+            <rect x="2" y="13" width="8" height="10" fill="#f0d888" stroke="#b09020" stroke-width="1"/>
+            <rect x="14" y="13" width="8" height="10" fill="#f0d888" stroke="#b09020" stroke-width="1"/>
+            <rect x="26" y="13" width="8" height="10" fill="#f0d888" stroke="#b09020" stroke-width="1"/>
+            <rect x="38" y="13" width="8" height="10" fill="#f0d888" stroke="#b09020" stroke-width="1"/>
+          </svg>
+          <div class="drawing-label">Medina Gate</div>
+        </div>
+        <div class="drawing-item">
+          <svg width="54" height="58" viewBox="0 0 54 58">
+            <ellipse cx="29" cy="38" rx="15" ry="10" fill="#d4a840"/>
+            <ellipse cx="25" cy="29" rx="8" ry="7" fill="#c89830"/>
+            <circle cx="43" cy="29" r="7" fill="#d4a840"/>
+            <path d="M37,35 Q41,29 43,23" fill="none" stroke="#d4a840" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="45" cy="27" r="1.5" fill="#333"/>
+            <line x1="19" y1="48" x2="17" y2="57" stroke="#c89830" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="25" y1="48" x2="23" y2="57" stroke="#c89830" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="33" y1="48" x2="31" y2="57" stroke="#c89830" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="39" y1="48" x2="41" y2="57" stroke="#c89830" stroke-width="3.5" stroke-linecap="round"/>
+          </svg>
+          <div class="drawing-label">Camel Ride</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">5-Day Itinerary</div>
+        <div class="day-stack">
+          <div class="day-row"><span class="day-badge">DAY 1</span><span>Arrive Marrakech. Walk Djemaa el-Fna square. Eat tagine and drink mint tea!</span></div>
+          <div class="day-row"><span class="day-badge">DAY 2</span><span>Marrakech: Majorelle Garden + souk shopping. Bargain for a carpet!</span></div>
+          <div class="day-row"><span class="day-badge">DAY 3</span><span>Bus to Fez. Tour the ancient medina and the famous leather tanneries.</span></div>
+          <div class="day-row"><span class="day-badge">DAY 4</span><span>Drive to Sahara Desert. Camel ride at sunset. Sleep under the stars in a desert camp!</span></div>
+          <div class="day-row"><span class="day-badge">DAY 5</span><span>Visit Chefchaouen — the famous blue city! Take photos. Fly home from Casablanca.</span></div>
+        </div>
+      </div>
+
+      <div class="arabic-box">
+        <div class="arabic-title">Learn Some Arabic (Darija)!</div>
+        <div class="arabic-word"><span>Shukran = Thank you</span><span class="arabic-ar">شكرا</span></div>
+        <div class="arabic-word"><span>Marhaba = Welcome</span><span class="arabic-ar">مرحبا</span></div>
+        <div class="arabic-word"><span>Bessaha = Enjoy your meal!</span><span class="arabic-ar">بصحة</span></div>
+        <div class="arabic-word"><span>Zwina = Beautiful</span><span class="arabic-ar">زوينة</span></div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div>
+        <div class="panel-title">Getting Around</div>
+        <ul class="panel-list">
+          <li>Train between big cities</li>
+          <li>CTM bus (comfortable)</li>
+          <li>Grand taxi for short trips</li>
+          <li>Walk inside the medinas</li>
+          <li>Rent a car for the desert</li>
+        </ul>
+      </div>
+      <div>
+        <div class="panel-title">Where to Stay</div>
+        <ul class="panel-list">
+          <li>Riad – traditional house!</li>
+          <li>Stay inside the old medina</li>
+          <li>Desert camp for one night</li>
+          <li>Riads in Fez are cheap!</li>
+          <li>Book early in spring</li>
+        </ul>
+      </div>
+      <div class="fact-bubble">
+        <div class="fact-title">Interesting Facts!</div>
+        Morocco has the oldest university in the world — founded in 859 AD!<br><br>
+        It has coasts on BOTH the Atlantic Ocean AND the Mediterranean Sea.<br><br>
+        Morocco was the first country to recognize American independence in 1777!
+      </div>
+    </div>
+  </div>
+
+  <div class="tile-border"></div>
+  <div class="footer">Made by: Fatima, Dong-hyun, Priya &amp; Marco &nbsp;|&nbsp; ESL Class &nbsp;|&nbsp; Dream Destination Project</div>
+</div>
+</body>
+</html>

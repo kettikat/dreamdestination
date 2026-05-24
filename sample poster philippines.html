@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Poster – Philippines</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Baloo+2:wght@400;600;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #b8d4e8;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .poster { box-shadow: none; }
+    .no-print { display: none; }
+  }
+
+  .no-print { position: fixed; top: 16px; right: 16px; z-index: 99; }
+  .print-btn { background: #1a5276; color: white; border: none; padding: 8px 20px; cursor: pointer; font-size: 0.9rem; border-radius: 4px; }
+
+  .poster {
+    width: 800px;
+    background: #fffef8;
+    box-shadow: 5px 5px 36px rgba(0,0,0,0.22);
+    font-family: 'Architects Daughter', cursive;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid #c8dce8;
+  }
+
+  .wave-bg {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 180px;
+    opacity: 0.08;
+  }
+
+  .poster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, #dde8ee 31px, #dde8ee 32px);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .tape { position: absolute; width: 64px; height: 20px; background: rgba(180,220,255,0.55); border: 1px solid rgba(140,190,230,0.4); z-index: 10; }
+  .tape.tl { top: -7px; left: 70px; transform: rotate(-2deg); }
+  .tape.tr { top: -7px; right: 80px; transform: rotate(4deg); }
+  .tape.bl { bottom: -7px; left: 100px; transform: rotate(2deg); }
+  .tape.br { bottom: -7px; right: 65px; transform: rotate(-3deg); }
+
+  .top-banner {
+    background: linear-gradient(135deg, #0050a0 0%, #0077cc 50%, #00aae4 100%);
+    padding: 22px 32px 18px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .flag-ph {
+    width: 72px; height: 48px;
+    border: 2.5px solid rgba(255,255,255,0.6);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .flag-ph .top-half { position: absolute; top: 0; left: 0; right: 0; height: 50%; background: #0050a0; }
+  .flag-ph .bot-half { position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: #ce1126; }
+  .flag-ph .triangle {
+    position: absolute; top: 0; left: 0; bottom: 0; width: 0; height: 0;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    border-left: 38px solid #ffffff;
+  }
+  .flag-ph .sun {
+    position: absolute; top: 50%; left: 14px;
+    transform: translate(-50%, -50%);
+    width: 16px; height: 16px;
+    background: #fcd116; border-radius: 50%;
+  }
+
+  .header-text { flex: 1; }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.9rem; font-weight: 800;
+    color: white; line-height: 1;
+    text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+  }
+
+  .slogan { color: #c8eaff; font-size: 0.92rem; margin-top: 5px; }
+  .stars { color: #fcd116; font-size: 1.2rem; letter-spacing: 2px; margin-top: 3px; }
+
+  .island-strip {
+    background: #e8f6ff;
+    border-top: 2px solid #b0d8f0;
+    border-bottom: 2px solid #b0d8f0;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 12px 24px 6px;
+    position: relative; z-index: 1;
+  }
+
+  .island-item { text-align: center; }
+  .island-label { font-size: 0.65rem; color: #3a6e8a; margin-top: 3px; }
+
+  .body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    position: relative; z-index: 1;
+  }
+
+  .col {
+    padding: 18px 20px;
+    border-right: 1.5px dashed #c8dce8;
+  }
+  .col:last-child { border-right: none; }
+
+  .col-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.05rem; font-weight: 800;
+    margin-bottom: 10px; padding-bottom: 5px;
+    border-bottom: 2.5px solid currentColor;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .col-title.blue { color: #0050a0; }
+  .col-title.red  { color: #ce1126; }
+  .col-title.gold { color: #b08000; }
+
+  .col ul { list-style: none; font-size: 0.85rem; color: #333; line-height: 1.8; }
+  .col ul li::before { content: "✦ "; font-size: 0.6rem; color: #0077cc; vertical-align: middle; }
+  .col.red-col  ul li::before { color: #ce1126; }
+  .col.gold-col ul li::before { color: #c09000; }
+
+  .timeline-section {
+    background: #f0f8ff;
+    border-top: 2px dashed #b0d0e8;
+    border-bottom: 2px dashed #b0d0e8;
+    padding: 16px 24px;
+    position: relative; z-index: 1;
+  }
+
+  .timeline-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem; font-weight: 800;
+    color: #0050a0; margin-bottom: 12px; text-align: center;
+  }
+
+  .timeline {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 14px; left: 28px; right: 28px; height: 2px;
+    background: repeating-linear-gradient(to right, #0077cc, #0077cc 6px, transparent 6px, transparent 12px);
+  }
+
+  .tl-day { flex: 1; text-align: center; position: relative; padding: 0 4px; }
+
+  .tl-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #0050a0; border: 3px solid white;
+    box-shadow: 0 0 0 2px #0050a0;
+    margin: 0 auto 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.72rem; font-weight: 800; color: white;
+  }
+
+  .tl-content { font-size: 0.72rem; color: #333; line-height: 1.4; }
+
+  .bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: relative; z-index: 1;
+  }
+
+  .bottom-cell {
+    padding: 14px 18px;
+    border-right: 1.5px dashed #c8dce8;
+    font-size: 0.83rem;
+  }
+  .bottom-cell:last-child { border-right: none; }
+
+  .bottom-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.9rem; font-weight: 800; margin-bottom: 7px;
+  }
+
+  .bottom-cell.tip  .bottom-title { color: #0050a0; }
+  .bottom-cell.fact .bottom-title { color: #ce1126; }
+  .bottom-cell.word .bottom-title { color: #8a6a00; }
+
+  .bottom-cell p { color: #444; line-height: 1.65; }
+
+  .tagalog { font-size: 1rem; color: #0050a0; font-weight: 700; display: block; margin-bottom: 4px; line-height: 1.8; }
+  .tagalog-meaning { font-size: 0.78rem; color: #666; }
+
+  .footer {
+    background: #0050a0; color: rgba(255,255,255,0.7);
+    text-align: center; padding: 8px 20px;
+    font-size: 0.73rem; position: relative; z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨 Print</button>
+</div>
+
+<div class="poster">
+  <div class="tape tl"></div><div class="tape tr"></div>
+  <div class="tape bl"></div><div class="tape br"></div>
+
+  <svg class="wave-bg" viewBox="0 0 800 180" preserveAspectRatio="none">
+    <path d="M0,60 Q200,10 400,60 Q600,110 800,60 L800,180 L0,180 Z" fill="#0077cc"/>
+    <path d="M0,90 Q200,50 400,90 Q600,130 800,90 L800,180 L0,180 Z" fill="#00aae4"/>
+  </svg>
+
+  <div class="top-banner">
+    <div class="flag-ph">
+      <div class="top-half"></div><div class="bot-half"></div>
+      <div class="triangle"></div><div class="sun"></div>
+    </div>
+    <div class="header-text">
+      <h1>🌴 Visit the Philippines!</h1>
+      <div class="slogan">"7,641 islands, endless adventures, warmest people!"</div>
+      <div class="stars">★★★★★</div>
+    </div>
+  </div>
+
+  <div class="island-strip">
+    <div class="island-item">
+      <svg width="60" height="56" viewBox="0 0 60 56">
+        <rect x="0" y="40" width="60" height="16" fill="#60b8e0" rx="2"/>
+        <ellipse cx="30" cy="40" rx="24" ry="7" fill="#f0d878"/>
+        <line x1="30" y1="40" x2="28" y2="12" stroke="#7a4a10" stroke-width="3" stroke-linecap="round"/>
+        <path d="M28,14 Q10,8 8,18" fill="none" stroke="#3a8a30" stroke-width="3" stroke-linecap="round"/>
+        <path d="M28,14 Q46,8 48,18" fill="none" stroke="#3a8a30" stroke-width="3" stroke-linecap="round"/>
+        <path d="M28,14 Q18,2 26,0" fill="none" stroke="#3a8a30" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="28" cy="18" r="4" fill="#8B4513"/>
+      </svg>
+      <div class="island-label">Palawan Beach 🏝</div>
+    </div>
+    <div class="island-item">
+      <svg width="56" height="56" viewBox="0 0 56 56">
+        <rect x="0" y="0" width="56" height="28" fill="#c8e8f8" rx="2"/>
+        <circle cx="12" cy="10" r="6" fill="white"/>
+        <circle cx="22" cy="8" r="8" fill="white"/>
+        <circle cx="32" cy="9" r="7" fill="white"/>
+        <ellipse cx="14" cy="44" rx="14" ry="10" fill="#8B6914"/>
+        <ellipse cx="30" cy="40" rx="16" ry="12" fill="#7a5c10"/>
+        <ellipse cx="46" cy="44" rx="12" ry="9" fill="#8B6914"/>
+        <ellipse cx="14" cy="36" rx="12" ry="6" fill="#5a9a30"/>
+        <ellipse cx="30" cy="30" rx="14" ry="7" fill="#4a8a28"/>
+        <ellipse cx="46" cy="36" rx="11" ry="6" fill="#5a9a30"/>
+      </svg>
+      <div class="island-label">Chocolate Hills 🍫⛰</div>
+    </div>
+    <div class="island-item">
+      <svg width="54" height="56" viewBox="0 0 54 56">
+        <rect x="4" y="22" width="46" height="24" rx="3" fill="#e83030"/>
+        <rect x="8" y="14" width="38" height="10" rx="2" fill="#fcd116"/>
+        <rect x="8" y="26" width="12" height="10" rx="1" fill="#a8d8f0"/>
+        <rect x="22" y="26" width="12" height="10" rx="1" fill="#a8d8f0"/>
+        <rect x="36" y="24" width="12" height="14" rx="2" fill="#cc2020"/>
+        <rect x="38" y="26" width="8" height="8" rx="1" fill="#a8d8f0"/>
+        <circle cx="14" cy="47" r="7" fill="#333" stroke="#666" stroke-width="1.5"/>
+        <circle cx="14" cy="47" r="3" fill="#aaa"/>
+        <circle cx="38" cy="47" r="7" fill="#333" stroke="#666" stroke-width="1.5"/>
+        <circle cx="38" cy="47" r="3" fill="#aaa"/>
+      </svg>
+      <div class="island-label">Jeepney 🚌</div>
+    </div>
+    <div class="island-item">
+      <svg width="50" height="56" viewBox="0 0 50 56">
+        <ellipse cx="25" cy="44" rx="22" ry="8" fill="#c8a060"/>
+        <ellipse cx="25" cy="38" rx="22" ry="8" fill="#d4b070"/>
+        <ellipse cx="25" cy="34" rx="18" ry="6" fill="#8B4513"/>
+        <ellipse cx="18" cy="32" rx="6" ry="4" fill="#a05020"/>
+        <ellipse cx="28" cy="31" rx="7" ry="4" fill="#8B4513"/>
+        <ellipse cx="22" cy="29" rx="5" ry="3" fill="#a05020"/>
+        <path d="M18,24 Q20,18 18,12" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M25,22 Q27,16 25,10" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="island-label">Chicken Adobo 🍲</div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="col">
+      <div class="col-title blue">📍 Places to Visit</div>
+      <ul>
+        <li>Palawan – most beautiful island</li>
+        <li>Boracay – famous white beach</li>
+        <li>Bohol – Chocolate Hills!</li>
+        <li>Manila – the capital city</li>
+        <li>Siargao – surfing paradise</li>
+        <li>Vigan – Spanish colonial town</li>
+      </ul>
+    </div>
+    <div class="col red-col">
+      <div class="col-title red">🍽 Food to Try</div>
+      <ul>
+        <li>Adobo – chicken in vinegar + soy</li>
+        <li>Sinigang – sour soup</li>
+        <li>Lechon – whole roast pig!</li>
+        <li>Halo-halo – colorful cold dessert</li>
+        <li>Balut – adventurous street food</li>
+        <li>Mango – best in the world! 🥭</li>
+      </ul>
+    </div>
+    <div class="col gold-col">
+      <div class="col-title gold">🚌 Transport &amp; Stay</div>
+      <ul>
+        <li>Ride a Jeepney (fun &amp; cheap!)</li>
+        <li>Tricycle for short trips</li>
+        <li>Ferries between islands</li>
+        <li>Domestic flights affordable</li>
+        <li>Beach resorts in Palawan</li>
+        <li>Budget hotels in Manila</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="timeline-title">📅 5-Day Itinerary</div>
+    <div class="timeline">
+      <div class="tl-day"><div class="tl-dot">1</div><div class="tl-content">Arrive Manila. Try halo-halo. Visit Intramuros old city.</div></div>
+      <div class="tl-day"><div class="tl-dot">2</div><div class="tl-content">Fly to Palawan. Island hopping. Snorkel in crystal water!</div></div>
+      <div class="tl-day"><div class="tl-dot">3</div><div class="tl-content">Underground River tour. Eat lechon dinner on the beach. 🌅</div></div>
+      <div class="tl-day"><div class="tl-dot">4</div><div class="tl-content">Fly to Bohol. See Chocolate Hills. Meet a tarsier! 🐒</div></div>
+      <div class="tl-day"><div class="tl-dot">5</div><div class="tl-content">Relax on Alona Beach. Buy souvenirs. Fly home. 😊</div></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="bottom-cell tip">
+      <div class="bottom-title">💡 Travel Tips</div>
+      <p>Smile a lot — Filipinos are very friendly!<br>
+      Say "po" and "opo" to show respect.<br>
+      Bring sunscreen — very hot and sunny!<br>
+      Best time: November–April (dry season)</p>
+    </div>
+    <div class="bottom-cell fact">
+      <div class="bottom-title">🌟 Interesting Facts</div>
+      <p>The Philippines has 7,641 islands!<br>
+      Basketball is the #1 sport 🏀<br>
+      One of the biggest English-speaking countries in Asia.<br>
+      Home to 700+ species of birds! 🦜</p>
+    </div>
+    <div class="bottom-cell word">
+      <div class="bottom-title">🗣 Learn Some Tagalog!</div>
+      <span class="tagalog">Salamat! = Thank you!<br>Mabuhay! = Welcome!<br>Maganda! = Beautiful!</span>
+      <span class="tagalog-meaning">Filipinos will love it if you try! 💛</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made by: Maria, Jae-won, Amara &amp; Luisa &nbsp;|&nbsp; ESL Class &nbsp;|&nbsp; Dream Destination Project
+  </div>
+</div>
+
+</body>
+</html>

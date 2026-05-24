@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Poster – Colombia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #c8d4c0;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .poster { box-shadow: none; }
+    .no-print { display: none; }
+  }
+
+  .no-print { position: fixed; top: 16px; right: 16px; z-index: 99; }
+  .print-btn {
+    background: #333; color: white; border: none;
+    padding: 8px 20px; cursor: pointer; font-size: 0.9rem; border-radius: 4px;
+  }
+
+  .poster {
+    width: 780px;
+    min-height: 1040px;
+    background: #fffef5;
+    box-shadow: 4px 4px 32px rgba(0,0,0,0.25);
+    padding: 36px 40px 40px;
+    font-family: 'Architects Daughter', cursive;
+    position: relative;
+    border: 3px solid #e0d8b0;
+  }
+
+  .poster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent, transparent 31px, #e8e8d8 31px, #e8e8d8 32px
+    );
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* tape */
+  .tape { position: absolute; width: 70px; height: 22px; background: rgba(255,230,180,0.6); border: 1px solid rgba(220,180,120,0.4); }
+  .tape.tl { top: -8px; left: 80px; transform: rotate(2deg); }
+  .tape.tr { top: -8px; right: 70px; transform: rotate(-4deg); }
+  .tape.bl { bottom: -8px; left: 60px; transform: rotate(-2deg); }
+  .tape.br { bottom: -8px; right: 90px; transform: rotate(5deg); }
+
+  /* ── HEADER ── */
+  .header { text-align: center; margin-bottom: 16px; position: relative; }
+
+  .flag-co {
+    display: inline-flex;
+    width: 64px;
+    height: 40px;
+    border: 2px solid #666;
+    flex-direction: column;
+    overflow: hidden;
+    vertical-align: middle;
+    margin: 0 12px;
+  }
+  .flag-co .s1 { flex: 2; background: #fcd116; }
+  .flag-co .s2 { flex: 1; background: #003893; }
+  .flag-co .s3 { flex: 1; background: #ce1126; }
+
+  .flag-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
+
+  h1 { font-size: 3rem; color: #ce1126; line-height: 1; letter-spacing: 1px; }
+  .slogan { font-size: 1rem; color: #555; margin-top: 5px; }
+  .stars { color: #fcd116; font-size: 1.3rem; letter-spacing: 3px; margin-top: 4px; text-shadow: 0 0 2px #b09000; }
+
+  hr.divider { border: none; border-top: 2.5px dashed #ccc; margin: 14px 0; }
+
+  /* drawings */
+  .drawing-strip {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin: 8px 0;
+    height: 72px;
+  }
+  .drawn-label { font-size: 0.68rem; text-align: center; color: #777; margin-top: 3px; }
+
+  /* ── GRID ── */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  .section {
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 13px 15px;
+  }
+
+  .section.yellow { border-top: 4px solid #d4a800; }
+  .section.blue   { border-top: 4px solid #003893; }
+  .section.red    { border-top: 4px solid #ce1126; }
+  .section.green  { border-top: 4px solid #3a7a2a; }
+
+  .section-title { font-size: 1rem; font-weight: 700; margin-bottom: 9px; display: flex; align-items: center; gap: 6px; }
+  .section.yellow .section-title { color: #b08a00; }
+  .section.blue   .section-title { color: #003893; }
+  .section.red    .section-title { color: #ce1126; }
+  .section.green  .section-title { color: #3a7a2a; }
+
+  .section ul { list-style: none; font-size: 0.87rem; color: #333; line-height: 1.75; }
+  .section ul li::before { content: "→ "; }
+
+  /* ITINERARY */
+  .itinerary {
+    background: white;
+    border: 2px solid #ccc;
+    border-top: 4px solid #3a7a2a;
+    border-radius: 4px;
+    padding: 13px 15px;
+    margin-bottom: 16px;
+  }
+  .itinerary-title { font-size: 1rem; font-weight: 700; color: #3a7a2a; margin-bottom: 10px; }
+  .days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .day { background: #f0f8ee; border: 1.5px solid #90c880; border-radius: 4px; padding: 8px 6px; text-align: center; font-size: 0.76rem; line-height: 1.5; }
+  .day-label { font-size: 0.7rem; font-weight: 700; color: #3a7a2a; display: block; margin-bottom: 3px; }
+
+  /* TIP + FACT */
+  .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .tip-box { background: #fff5cc; border: 2px solid #e0c030; border-radius: 4px; padding: 12px 14px; }
+  .tip-title { font-size: 0.93rem; font-weight: 700; color: #8a6800; margin-bottom: 7px; }
+  .tip-text { font-size: 0.84rem; color: #444; line-height: 1.65; }
+
+  .fact-box { background: #eef5ff; border: 2px solid #7aaae0; border-radius: 4px; padding: 12px 14px; }
+  .fact-title { font-size: 0.93rem; font-weight: 700; color: #003893; margin-bottom: 7px; }
+  .fact-text { font-size: 0.84rem; color: #333; line-height: 1.65; }
+
+  .local-word {
+    text-align: center;
+    margin-top: 14px;
+    padding: 10px;
+    background: #fff0ee;
+    border: 1.5px dashed #ce1126;
+    border-radius: 4px;
+  }
+  .local-word .sp { font-size: 1.4rem; color: #ce1126; }
+  .local-word .meaning { font-size: 0.8rem; color: #777; margin-top: 2px; }
+
+  .group-credit { text-align: center; margin-top: 16px; font-size: 0.77rem; color: #aaa; }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨 Print</button>
+</div>
+
+<div class="poster">
+  <div class="tape tl"></div>
+  <div class="tape tr"></div>
+  <div class="tape bl"></div>
+  <div class="tape br"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="flag-row">
+      <div class="flag-co"><div class="s1"></div><div class="s2"></div><div class="s3"></div></div>
+      <h1>Visit Colombia! 🇨🇴</h1>
+      <div class="flag-co"><div class="s1"></div><div class="s2"></div><div class="s3"></div></div>
+    </div>
+    <div class="slogan">"Sun, coffee, salsa, and beautiful people!"</div>
+    <div class="stars">★★★★★</div>
+  </div>
+
+  <!-- DRAWINGS -->
+  <div class="drawing-strip">
+    <div style="text-align:center;">
+      <svg width="50" height="62" viewBox="0 0 50 62">
+        <!-- Coffee cup -->
+        <rect x="10" y="28" width="30" height="24" rx="3" fill="white" stroke="#7a4a1a" stroke-width="2"/>
+        <path d="M40,34 Q50,34 50,42 Q50,50 40,50" fill="none" stroke="#7a4a1a" stroke-width="2"/>
+        <ellipse cx="25" cy="28" rx="15" ry="4" fill="#c8906a" stroke="#7a4a1a" stroke-width="1.5"/>
+        <!-- steam -->
+        <path d="M18,22 Q20,16 18,10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M25,20 Q27,14 25,8" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M32,22 Q34,16 32,10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- saucer -->
+        <ellipse cx="25" cy="53" rx="20" ry="5" fill="white" stroke="#7a4a1a" stroke-width="1.5"/>
+      </svg>
+      <div class="drawn-label">Colombian Coffee ☕</div>
+    </div>
+    <div style="text-align:center;">
+      <svg width="56" height="62" viewBox="0 0 56 62">
+        <!-- Cartagena building -->
+        <rect x="8" y="22" width="40" height="36" fill="#f5e090" stroke="#aa8820" stroke-width="2"/>
+        <!-- roof -->
+        <polygon points="4,22 28,6 52,22" fill="#ce4040" stroke="#aa2020" stroke-width="1.5"/>
+        <!-- door -->
+        <rect x="22" y="42" width="12" height="16" rx="6" fill="#8a5a20" stroke="#6a3a10" stroke-width="1.5"/>
+        <!-- windows -->
+        <rect x="11" y="30" width="10" height="8" rx="1" fill="#a0c8e8" stroke="#6090b8" stroke-width="1.5"/>
+        <rect x="35" y="30" width="10" height="8" rx="1" fill="#a0c8e8" stroke="#6090b8" stroke-width="1.5"/>
+        <!-- flowers on wall -->
+        <circle cx="20" cy="44" r="3" fill="#ff8080"/>
+        <circle cx="36" cy="44" r="3" fill="#ff80c0"/>
+      </svg>
+      <div class="drawn-label">Cartagena 🏛</div>
+    </div>
+    <div style="text-align:center;">
+      <svg width="54" height="62" viewBox="0 0 54 62">
+        <!-- Tropical bird (toucan) -->
+        <ellipse cx="27" cy="36" rx="14" ry="18" fill="#1a1a1a" stroke="#333" stroke-width="1.5"/>
+        <!-- beak -->
+        <path d="M38,32 Q52,30 50,38 Q48,44 38,42 Z" fill="#fcd116" stroke="#c0a000" stroke-width="1.5"/>
+        <!-- orange on beak tip -->
+        <path d="M44,30 Q52,30 50,38" fill="none" stroke="#e07020" stroke-width="3"/>
+        <!-- eye -->
+        <circle cx="33" cy="28" r="4" fill="white"/>
+        <circle cx="33" cy="28" r="2.5" fill="#1a1a1a"/>
+        <circle cx="34" cy="27" r="1" fill="white"/>
+        <!-- red chest -->
+        <ellipse cx="25" cy="45" rx="8" ry="10" fill="#ce1126"/>
+        <!-- feet -->
+        <line x1="22" y1="56" x2="18" y2="62" stroke="#888" stroke-width="2"/>
+        <line x1="28" y1="56" x2="32" y2="62" stroke="#888" stroke-width="2"/>
+      </svg>
+      <div class="drawn-label">Toucan 🦜</div>
+    </div>
+    <div style="text-align:center;">
+      <svg width="50" height="62" viewBox="0 0 50 62">
+        <!-- Arepa / Colombian food -->
+        <ellipse cx="25" cy="46" rx="20" ry="8" fill="#e8c870" stroke="#b09020" stroke-width="2"/>
+        <ellipse cx="25" cy="40" rx="20" ry="8" fill="#f0d880" stroke="#b09020" stroke-width="2"/>
+        <!-- cheese on top -->
+        <ellipse cx="25" cy="38" rx="16" ry="5" fill="#ffe090" stroke="#d0a830" stroke-width="1.5"/>
+        <!-- label -->
+        <text x="25" y="20" text-anchor="middle" font-size="9" fill="#8a6000" font-family="Arial">Arepa!</text>
+        <!-- arrow -->
+        <line x1="25" y1="22" x2="25" y2="32" stroke="#8a6000" stroke-width="1.5" marker-end="url(#arr)"/>
+      </svg>
+      <div class="drawn-label">Arepa 🫓</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- GRID -->
+  <div class="grid">
+    <div class="section yellow">
+      <div class="section-title">📍 Places to Visit</div>
+      <ul>
+        <li>Cartagena – colonial city by the sea</li>
+        <li>Medellín – the city of eternal spring</li>
+        <li>Bogotá – capital, museums, markets</li>
+        <li>Coffee Region (Eje Cafetero)</li>
+        <li>Tayrona National Park</li>
+      </ul>
+    </div>
+    <div class="section red">
+      <div class="section-title">🍽 Food to Try</div>
+      <ul>
+        <li>Arepa – corn bread (breakfast!)</li>
+        <li>Bandeja Paisa – big rice plate</li>
+        <li>Ajiaco – chicken soup</li>
+        <li>Empanadas – fried pockets</li>
+        <li>Fresh tropical fruit juices!</li>
+      </ul>
+    </div>
+    <div class="section blue">
+      <div class="section-title">🚌 Getting Around</div>
+      <ul>
+        <li>Domestic flights are cheap</li>
+        <li>Medellín has a Metro + cable car!</li>
+        <li>Buses between cities</li>
+        <li>Taxis – always use the app (Uber/InDriver)</li>
+      </ul>
+    </div>
+    <div class="section green">
+      <div class="section-title">🏨 Where to Stay</div>
+      <ul>
+        <li>Cartagena – hotel in the walled city</li>
+        <li>Medellín – El Poblado neighborhood</li>
+        <li>Hostels are very cheap and friendly</li>
+        <li>Airbnb options everywhere</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ITINERARY -->
+  <div class="itinerary">
+    <div class="itinerary-title">📅 5-Day Itinerary</div>
+    <div class="days">
+      <div class="day"><span class="day-label">DAY 1</span>Arrive Bogotá. Walk La Candelaria. Try ajiaco soup!</div>
+      <div class="day"><span class="day-label">DAY 2</span>Bogotá: Gold Museum + Monserrate mountain. Good views!</div>
+      <div class="day"><span class="day-label">DAY 3</span>Fly to Cartagena. Walk the walled city. Eat seafood dinner.</div>
+      <div class="day"><span class="day-label">DAY 4</span>Cartagena: beach + boat trip to Rosario Islands. 🏝</div>
+      <div class="day"><span class="day-label">DAY 5</span>Coffee Region: visit a coffee farm. Fly home. ☕</div>
+    </div>
+  </div>
+
+  <!-- TIP + FACT -->
+  <div class="bottom-row">
+    <div class="tip-box">
+      <div class="tip-title">💡 Important Travel Tips</div>
+      <div class="tip-text">
+        Learn a little Spanish – people love it!<br>
+        Don't walk with your phone visible.<br>
+        Use sunscreen – it's very sunny!<br>
+        Always try the fresh fruit – it's amazing. 🍉
+      </div>
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">🌟 Interesting Facts</div>
+      <div class="fact-text">
+        Colombia has 2 coastlines: Pacific &amp; Caribbean!<br>
+        It's the #2 producer of coffee in the world.<br>
+        Home to 1,900 species of birds 🦜<br>
+        Best time to visit: December–March (dry season)
+      </div>
+    </div>
+  </div>
+
+  <!-- local word -->
+  <div class="local-word">
+    <div class="sp">¡Bienvenidos a Colombia!</div>
+    <div class="meaning">"Welcome to Colombia!" — and don't forget to say <em>¡Provecho!</em> before you eat (= enjoy your meal!)</div>
+  </div>
+
+  <div class="group-credit">Made by: Valentina, Ji-ho, Nasrin &amp; Kofi &nbsp;|&nbsp; ESL Class &nbsp;|&nbsp; Dream Destination Project</div>
+</div>
+
+</body>
+</html>
