@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Destination – ESL Group Project</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+  :root {
+    --bg: #1a1f2e;
+    --surface: #242938;
+    --card: #2e3447;
+    --border: #3d4560;
+    --gold: #f0b429;
+    --gold-dim: #7a5c14;
+    --sky: #60a5fa;
+    --sky-dim: #1e3a5f;
+    --green: #34d399;
+    --green-dim: #0d4a36;
+    --rose: #fb7185;
+    --rose-dim: #5c1e2a;
+    --text: #e8eaf0;
+    --muted: #8892aa;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.65;
+  }
+
+  @media print {
+    body { background: white; color: #111; font-size: 11pt; }
+    :root {
+      --bg: white; --surface: #f4f4f4; --card: #ececec;
+      --border: #ccc; --text: #111; --muted: #555;
+      --white: #111;
+    }
+    .page { box-shadow: none; margin: 0; }
+    .no-print { display: none !important; }
+    .phase { break-inside: avoid; }
+  }
+
+  .no-print { text-align: center; padding: 24px 0 8px; }
+  .print-btn {
+    background: var(--gold);
+    color: #1a1400;
+    border: none;
+    padding: 11px 28px;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .print-btn:hover { background: #e0a820; }
+
+  .page {
+    max-width: 800px;
+    margin: 20px auto 48px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1a2540 0%, #0f1829 100%);
+    border: 1px solid var(--border);
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: "✈";
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 7rem;
+    opacity: 0.07;
+    line-height: 1;
+  }
+
+  .header-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.0;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .header-desc {
+    margin-top: 14px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    background: rgba(240,180,41,0.12);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── MISSION BOX ── */
+  .mission {
+    background: var(--gold);
+    color: #1a1400;
+    padding: 20px 48px;
+    font-size: 0.97rem;
+    line-height: 1.65;
+    font-weight: 500;
+  }
+
+  .mission strong { font-weight: 700; }
+
+  /* ── NAMES ROW ── */
+  .names-row {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .name-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  .name-line {
+    border-bottom: 1px solid var(--border);
+    height: 24px;
+  }
+
+  /* ── CONTENT ── */
+  .content { padding: 32px 48px; }
+
+  /* ── INTRO SCENARIO ── */
+  .scenario {
+    background: var(--sky-dim);
+    border: 1px solid var(--sky);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .scenario-icon { font-size: 2rem; flex-shrink: 0; line-height: 1.2; }
+
+  .scenario-text { font-size: 0.95rem; line-height: 1.65; }
+  .scenario-text strong { color: var(--sky); }
+
+  /* ── PHASE ── */
+  .phase {
+    margin-bottom: 26px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+  }
+
+  .phase-header.gold  { background: #2a2410; border-bottom: 2px solid var(--gold); }
+  .phase-header.sky   { background: var(--sky-dim); border-bottom: 2px solid var(--sky); }
+  .phase-header.green { background: var(--green-dim); border-bottom: 2px solid var(--green); }
+  .phase-header.rose  { background: var(--rose-dim); border-bottom: 2px solid var(--rose); }
+
+  .phase-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    min-width: 36px;
+  }
+
+  .phase-header.gold  .phase-num { color: var(--gold); }
+  .phase-header.sky   .phase-num { color: var(--sky); }
+  .phase-header.green .phase-num { color: var(--green); }
+  .phase-header.rose  .phase-num { color: var(--rose); }
+
+  .phase-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .phase-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .phase-time {
+    margin-left: auto;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .phase-body {
+    background: var(--card);
+    padding: 18px 22px;
+  }
+
+  /* ── TASK LIST ── */
+  .task-list { list-style: none; }
+
+  .task-list li {
+    display: flex;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.93rem;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .task-list li:last-child { border-bottom: none; }
+
+  .task-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    margin-top: 1px;
+  }
+
+  .task-icon.gold  { background: #2a2410; color: var(--gold);  border: 1.5px solid var(--gold-dim); }
+  .task-icon.sky   { background: var(--sky-dim); color: var(--sky); border: 1.5px solid #2a4a7f; }
+  .task-icon.green { background: var(--green-dim); color: var(--green); border: 1.5px solid #1a6e50; }
+  .task-icon.rose  { background: var(--rose-dim); color: var(--rose); border: 1.5px solid #7a2a38; }
+
+  /* ── TOPIC GRID ── */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .topic-emoji { font-size: 1.6rem; display: block; margin-bottom: 5px; }
+  .topic-name  { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--sky); display: block; margin-bottom: 3px; }
+  .topic-hint  { font-size: 0.75rem; color: var(--muted); font-style: italic; }
+
+  /* ── PHRASE STRIP ── */
+  .phrase-strip {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.83rem;
+  }
+
+  .phrase-strip.gold  { background: #2a2410; border-left: 3px solid var(--gold); }
+  .phrase-strip.sky   { background: var(--sky-dim); border-left: 3px solid var(--sky); }
+  .phrase-strip.green { background: var(--green-dim); border-left: 3px solid var(--green); }
+  .phrase-strip.rose  { background: var(--rose-dim); border-left: 3px solid var(--rose); }
+
+  .phrase-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  .phrase-label.gold  { color: var(--gold); }
+  .phrase-label.sky   { color: var(--sky); }
+  .phrase-label.green { color: var(--green); }
+  .phrase-label.rose  { color: var(--rose); }
+
+  .phrases { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .phrase {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-style: italic;
+    font-size: 0.82rem;
+  }
+
+  .phrase.gold  { background: rgba(240,180,41,0.12); color: #d4a030; border: 1px solid var(--gold-dim); }
+  .phrase.sky   { background: rgba(96,165,250,0.12); color: #93c5fd; border: 1px solid #2a4a7f; }
+  .phrase.green { background: rgba(52,211,153,0.1);  color: #6ee7b7; border: 1px solid #1a6e50; }
+  .phrase.rose  { background: rgba(251,113,133,0.1); color: #fda4af; border: 1px solid #7a2a38; }
+
+  /* ── POSTER GUIDE ── */
+  .poster-guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .poster-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 11px 14px;
+  }
+
+  .poster-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 6px;
+  }
+
+  .poster-section ul {
+    list-style: none;
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .poster-section ul li::before { content: "· "; color: var(--green); }
+
+  /* ── PRESENTATION GUIDE ── */
+  .pres-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .pres-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .pres-step-num {
+    background: var(--rose-dim);
+    border: 1.5px solid var(--rose);
+    color: var(--rose);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pres-step-body strong {
+    color: var(--rose);
+    font-style: normal;
+  }
+
+  /* ── ROLES ── */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .role-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .role-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .role-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── REMINDER BANNER ── */
+  .reminder {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  .reminder strong { color: var(--gold); font-style: normal; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">ESL Group Project — High Beginning</div>
+    <h1>Dream<br><span>Destination</span></h1>
+    <p class="header-desc">Your group will plan a trip together, create a poster, and present it to the class — all in English.</p>
+    <div class="header-meta">
+      <span class="meta-pill">⏱ 60–90 minutes</span>
+      <span class="meta-pill">👥 Groups of 3–4</span>
+      <span class="meta-pill">🗣 Speak English the whole time</span>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <div class="mission">
+    <strong>Your mission:</strong> Work with your group to plan a 5-day trip to <em>one country represented in your group</em>. Decide where to go, what to do, what to eat, and how to travel. Then make a poster and give a short presentation to the class.
+  </div>
+
+  <!-- NAMES -->
+  <div class="names-row">
+    <div class="name-field">Group Member 1<div class="name-line"></div></div>
+    <div class="name-field">Group Member 2<div class="name-line"></div></div>
+    <div class="name-field">Group Member 3<div class="name-line"></div></div>
+    <div class="name-field">Group Member 4<div class="name-line"></div></div>
+  </div>
+
+  <div class="content">
+
+    <!-- SCENARIO -->
+    <div class="scenario">
+      <div class="scenario-icon">🧳</div>
+      <div class="scenario-text">
+        <strong>The situation:</strong> You and your classmates work together at a travel agency. A customer wants a 5-day trip to a country none of them have visited before. Your group must choose <em>one destination country</em> (it must be the home country of someone in your group), plan the full trip, design a poster to advertise it, and present it to the customer — the class.
+      </div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase">
+      <div class="phase-header gold">
+        <span class="phase-num">1</span>
+        <div>
+          <div class="phase-title">Choose Your Destination &amp; Assign Roles</div>
+          <div class="phase-sub">Discuss and decide together</div>
+        </div>
+        <span class="phase-time">⏱ ~10 min</span>
+      </div>
+      <div class="phase-body">
+        <ul class="task-list">
+          <li><span class="task-icon gold">→</span><span>Introduce yourselves. Tell the group your name and home country.</span></li>
+          <li><span class="task-icon gold">→</span><span>Discuss: <em>Which country should we plan the trip to?</em> Everyone gives an opinion. Vote if you need to. The chosen country should be someone's home country so that person can be the expert.</span></li>
+          <li><span class="task-icon gold">→</span><span>Assign a role to each person (see below). If your group has 3 people, one person takes two roles.</span></li>
+        </ul>
+
+        <div class="roles-grid">
+          <div class="role-card">
+            <div class="role-title">🗺 The Destination Expert</div>
+            <div class="role-desc">You know the most about this country. Help your group understand the places, food, and culture. Answer their questions.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-title">📅 The Itinerary Planner</div>
+            <div class="role-desc">You organize the 5-day schedule. Decide what happens on each day. Make sure the plan is realistic and fun.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-title">🎨 The Poster Designer</div>
+            <div class="role-desc">You lead the creation of the poster. Decide what to write, draw, or include. Make it look attractive.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-title">🎤 The Presenter</div>
+            <div class="role-desc">You lead the presentation to the class. Practice what to say. Make sure everyone in the group speaks at least once.</div>
+          </div>
+        </div>
+
+        <div class="phrase-strip gold">
+          <div class="phrase-label gold">Phrases for deciding</div>
+          <div class="phrases">
+            <span class="phrase gold">"I think we should go to ___."</span>
+            <span class="phrase gold">"What does everyone think?"</span>
+            <span class="phrase gold">"I agree / I disagree because…"</span>
+            <span class="phrase gold">"Let's vote."</span>
+            <span class="phrase gold">"Can you explain that?"</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase">
+      <div class="phase-header sky">
+        <span class="phase-num">2</span>
+        <div>
+          <div class="phase-title">Plan the Trip</div>
+          <div class="phase-sub">The Destination Expert answers questions — everyone else asks and takes notes</div>
+        </div>
+        <span class="phase-time">⏱ ~20 min</span>
+      </div>
+      <div class="phase-body">
+        <ul class="task-list">
+          <li><span class="task-icon sky">→</span><span>Together, discuss and decide on the details below. The Itinerary Planner writes down the group's decisions on the back of this sheet or on a separate paper.</span></li>
+          <li><span class="task-icon sky">→</span><span>The Destination Expert should share real information — places they know, food they love, things tourists actually do.</span></li>
+          <li><span class="task-icon sky">→</span><span>Everyone should ask questions and give opinions. Don't let one person decide everything!</span></li>
+        </ul>
+
+        <div class="topic-grid">
+          <div class="topic-card">
+            <span class="topic-emoji">🏙</span>
+            <span class="topic-name">Cities &amp; Places</span>
+            <span class="topic-hint">Which city do you fly into? What are the best places to visit?</span>
+          </div>
+          <div class="topic-card">
+            <span class="topic-emoji">🍜</span>
+            <span class="topic-name">Food &amp; Drinks</span>
+            <span class="topic-hint">What must tourists try? Any restaurants or markets?</span>
+          </div>
+          <div class="topic-card">
+            <span class="topic-emoji">🏨</span>
+            <span class="topic-name">Where to Stay</span>
+            <span class="topic-hint">Hotel, hostel, or with a family? In the city or outside?</span>
+          </div>
+          <div class="topic-card">
+            <span class="topic-emoji">🚌</span>
+            <span class="topic-name">Getting Around</span>
+            <span class="topic-hint">Train, bus, taxi, walking? How do people travel there?</span>
+          </div>
+          <div class="topic-card">
+            <span class="topic-emoji">🎉</span>
+            <span class="topic-name">Culture &amp; Tips</span>
+            <span class="topic-hint">What should tourists know? Any customs or polite behavior?</span>
+          </div>
+          <div class="topic-card">
+            <span class="topic-emoji">📅</span>
+            <span class="topic-name">Day-by-Day Plan</span>
+            <span class="topic-hint">What happens on Day 1, Day 2… Day 5?</span>
+          </div>
+        </div>
+
+        <div class="phrase-strip sky">
+          <div class="phrase-label sky">Phrases for planning</div>
+          <div class="phrases">
+            <span class="phrase sky">"What do you recommend?"</span>
+            <span class="phrase sky">"How long does that take?"</span>
+            <span class="phrase sky">"Is that expensive?"</span>
+            <span class="phrase sky">"What about Day 3 — what should we do?"</span>
+            <span class="phrase sky">"That's a great idea!"</span>
+            <span class="phrase sky">"I'm not sure. Maybe…"</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase">
+      <div class="phase-header green">
+        <span class="phase-num">3</span>
+        <div>
+          <div class="phase-title">Make Your Poster</div>
+          <div class="phase-sub">Use the paper your teacher left — everyone contributes</div>
+        </div>
+        <span class="phase-time">⏱ ~20 min</span>
+      </div>
+      <div class="phase-body">
+        <ul class="task-list">
+          <li><span class="task-icon green">→</span><span>The Poster Designer leads, but everyone helps write and draw. Divide the sections between group members so you all work at the same time.</span></li>
+          <li><span class="task-icon green">→</span><span>Write in English. Use large, clear writing so the class can read it from a distance.</span></li>
+          <li><span class="task-icon green">→</span><span>While you work, keep talking — read things aloud, ask "how do you spell ___?", give opinions on what looks good.</span></li>
+        </ul>
+
+        <div class="poster-guide">
+          <div class="poster-section">
+            <h4>📌 Must Include</h4>
+            <ul>
+              <li>Country name &amp; flag (drawn)</li>
+              <li>Title: <em>"Visit [Country]!"</em></li>
+              <li>3–5 places to visit</li>
+              <li>2–3 foods to try</li>
+              <li>The 5-day itinerary (Day 1–5)</li>
+              <li>One travel tip for tourists</li>
+            </ul>
+          </div>
+          <div class="poster-section">
+            <h4>⭐ Nice to Add</h4>
+            <ul>
+              <li>Simple drawings or maps</li>
+              <li>A slogan or catchphrase</li>
+              <li>Words in the local language</li>
+              <li>Weather or best time to visit</li>
+              <li>An interesting fact</li>
+              <li>A rating: ⭐⭐⭐⭐⭐</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phrase-strip green">
+          <div class="phrase-label green">Phrases for collaborating</div>
+          <div class="phrases">
+            <span class="phrase green">"You write this part, I'll draw."</span>
+            <span class="phrase green">"How do you spell ___?"</span>
+            <span class="phrase green">"Does this look good?"</span>
+            <span class="phrase green">"Can you make that bigger?"</span>
+            <span class="phrase green">"I think we should add ___."</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase">
+      <div class="phase-header rose">
+        <span class="phase-num">4</span>
+        <div>
+          <div class="phase-title">Prepare &amp; Practice Your Presentation</div>
+          <div class="phase-sub">Every group member speaks during the presentation</div>
+        </div>
+        <span class="phase-time">⏱ ~10 min</span>
+      </div>
+      <div class="phase-body">
+        <ul class="task-list">
+          <li><span class="task-icon rose">→</span><span>The Presenter organizes who says what. Divide the poster into sections and assign each section to a person.</span></li>
+          <li><span class="task-icon rose">→</span><span>Practice your part out loud — don't just read it silently. Speak to your group as if they are the audience.</span></li>
+          <li><span class="task-icon rose">→</span><span>Give each other feedback: <em>"Speak a little louder." / "That was clear!" / "Can you explain that part more?"</em></span></li>
+        </ul>
+
+        <div class="pres-steps">
+          <div class="pres-step">
+            <div class="pres-step-num">1</div>
+            <div class="pres-step-body"><strong>Introduction (Presenter):</strong> "Hello everyone! We are the travel agents for [Country]. Today we want to invite you on an amazing trip…"</div>
+          </div>
+          <div class="pres-step">
+            <div class="pres-step-num">2</div>
+            <div class="pres-step-body"><strong>The Destination (Expert):</strong> Tell the class about the country — where it is, what it's famous for, what the culture is like.</div>
+          </div>
+          <div class="pres-step">
+            <div class="pres-step-num">3</div>
+            <div class="pres-step-body"><strong>The Itinerary (Planner):</strong> Walk through the 5-day plan. Explain what tourists will do each day.</div>
+          </div>
+          <div class="pres-step">
+            <div class="pres-step-num">4</div>
+            <div class="pres-step-body"><strong>Closing (Presenter):</strong> "We hope you will visit [Country]! Do you have any questions?"</div>
+          </div>
+        </div>
+
+        <div class="phrase-strip rose">
+          <div class="phrase-label rose">Phrases for presenting</div>
+          <div class="phrases">
+            <span class="phrase rose">"Our destination is…"</span>
+            <span class="phrase rose">"We recommend…"</span>
+            <span class="phrase rose">"On Day 1, tourists will…"</span>
+            <span class="phrase rose">"One important thing to know is…"</span>
+            <span class="phrase rose">"Any questions?"</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REMINDER -->
+    <div class="reminder">
+      <strong>Remember:</strong> Your teacher will ask you about your project when she returns. Be ready to explain your choices — why you picked that country, what you enjoyed planning, and what was difficult. Speak English the entire time. 🗣
+    </div>
+
+    <div class="footer">
+      <span>Dream Destination — ESL Group Project</span>
+      <span><a href="samplepostercolombia">Sample Poster Colombia</a></span>
+      <span><a href="samplepostermorocco">Sample Poster Morocco</a></span>
+      <span><a href="sampleposterphilippines">Sample Poster Philippines</a></span>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
